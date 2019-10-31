@@ -1,0 +1,72 @@
+\hypertarget{classmain_1_1qrcode}{}\doxysection{main.\+qrcode Class Reference}
+\label{classmain_1_1qrcode}\index{main.qrcode@{main.qrcode}}
+
+
+Inheritance diagram for main.\+qrcode\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=151pt]{classmain_1_1qrcode__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for main.\+qrcode\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=151pt]{classmain_1_1qrcode__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classmain_1_1qrcode_af826915a83b6a4d5c91686b332662da3}{get}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 137 of file main.\+py.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmain_1_1qrcode_af826915a83b6a4d5c91686b332662da3}\label{classmain_1_1qrcode_af826915a83b6a4d5c91686b332662da3}} 
+\index{main.qrcode@{main.qrcode}!get@{get}}
+\index{get@{get}!main.qrcode@{main.qrcode}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily def main.\+qrcode.\+get (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 138 of file main.\+py.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{138     \textcolor{keyword}{def }get(self):}
+\DoxyCodeLine{139         \textcolor{keywordflow}{if} \textcolor{stringliteral}{'username'} \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} session:}
+\DoxyCodeLine{140             abort(404)}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142         user = User.query.filter\_by(username=session[\textcolor{stringliteral}{'username'}]).first()}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144         \textcolor{keywordflow}{if} user \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{145             abort(404)}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147         del session[\textcolor{stringliteral}{'username'}]}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149         url = pyqrcode.create(user.get\_totp\_uri())}
+\DoxyCodeLine{150         stream = BytesIO()}
+\DoxyCodeLine{151         url.svg(stream, scale=3)}
+\DoxyCodeLine{152         param = \{\textcolor{stringliteral}{'Content-\/Type'}: \textcolor{stringliteral}{'image/svg+xml'}, \textcolor{stringliteral}{'Cache-\/Control'}: \textcolor{stringliteral}{'no-\/cache, no-\/store, must-\/revalidate'},\textcolor{stringliteral}{'Pragma'}: \textcolor{stringliteral}{'no-\/cache'}, \textcolor{stringliteral}{'Expires'}: \textcolor{stringliteral}{'0'}\}}
+\DoxyCodeLine{153         response = make\_response(stream.getvalue(), 200, param)}
+\DoxyCodeLine{154         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{155 }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+example/\mbox{\hyperlink{main_8py}{main.\+py}}\end{DoxyCompactItemize}

@@ -1,0 +1,109 @@
+\hypertarget{classmain_1_1command}{}\doxysection{main.\+command Class Reference}
+\label{classmain_1_1command}\index{main.command@{main.command}}
+
+
+Inheritance diagram for main.\+command\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=164pt]{classmain_1_1command__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for main.\+command\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=164pt]{classmain_1_1command__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classmain_1_1command_a45d94d28b30ca81f482a4bca1bb3bc96}{get}} (self)
+\item 
+def \mbox{\hyperlink{classmain_1_1command_aad57d3ca75e00b96364b4dd9971f8d34}{post}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 276 of file main.\+py.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmain_1_1command_a45d94d28b30ca81f482a4bca1bb3bc96}\label{classmain_1_1command_a45d94d28b30ca81f482a4bca1bb3bc96}} 
+\index{main.command@{main.command}!get@{get}}
+\index{get@{get}!main.command@{main.command}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily def main.\+command.\+get (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 277 of file main.\+py.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{277     \textcolor{keyword}{def }get(self):}
+\DoxyCodeLine{278         response = make\_response(render\_template(\textcolor{stringliteral}{'command.html'}))}
+\DoxyCodeLine{279         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{280 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmain_1_1command_aad57d3ca75e00b96364b4dd9971f8d34}\label{classmain_1_1command_aad57d3ca75e00b96364b4dd9971f8d34}} 
+\index{main.command@{main.command}!post@{post}}
+\index{post@{post}!main.command@{main.command}}
+\doxysubsubsection{\texorpdfstring{post()}{post()}}
+{\footnotesize\ttfamily def main.\+command.\+post (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 281 of file main.\+py.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{281     \textcolor{keyword}{def }post(self):}
+\DoxyCodeLine{282         username = request.form.get(\textcolor{stringliteral}{'username'})}
+\DoxyCodeLine{283         command = request.form.get(\textcolor{stringliteral}{'command'})}
+\DoxyCodeLine{284         loginhashblock = request.form.get(\textcolor{stringliteral}{'loginhashblock'})}
+\DoxyCodeLine{285         text = \textcolor{stringliteral}{"[info:command] username: \{\}, command: \{\}, loginhashblock: \{\}"}.format(username, command, loginhashblock)}
+\DoxyCodeLine{286         print(text)}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288         user = User.query.filter\_by(username=username).first()}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} user:}
+\DoxyCodeLine{291             resp = \{\textcolor{stringliteral}{'username'}:\textcolor{stringliteral}{'None'}, \textcolor{stringliteral}{'command'}:command, \textcolor{stringliteral}{'loginhashblock'}:\textcolor{stringliteral}{'None'}\}}
+\DoxyCodeLine{292             \textcolor{keywordflow}{return} make\_response(resp, command)}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294         \textcolor{keywordflow}{if} command == str(3):}
+\DoxyCodeLine{295             loginhashblock = user.Lhashblock}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297         \textcolor{keywordflow}{if} command == str(4):}
+\DoxyCodeLine{298             user.Lhashblock = loginhashblock}
+\DoxyCodeLine{299             db.session.commit()}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301         resp = \{\textcolor{stringliteral}{'username'}:username, \textcolor{stringliteral}{'command'}:command, \textcolor{stringliteral}{'loginhashblock'}:loginhashblock\}}
+\DoxyCodeLine{302         \textcolor{keywordflow}{return} make\_response(resp, command)}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304 db.create\_all()}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306 api.add\_resource(index, \textcolor{stringliteral}{'/'})}
+\DoxyCodeLine{307 api.add\_resource(logout, \textcolor{stringliteral}{'/logout'})}
+\DoxyCodeLine{308 api.add\_resource(register, \textcolor{stringliteral}{'/register'})}
+\DoxyCodeLine{309 api.add\_resource(twofactor, \textcolor{stringliteral}{'/twofactor'})}
+\DoxyCodeLine{310 api.add\_resource(qrcode, \textcolor{stringliteral}{'/qrcode'})}
+\DoxyCodeLine{311 api.add\_resource(login, \textcolor{stringliteral}{'/login'})}
+\DoxyCodeLine{312 api.add\_resource(command, \textcolor{stringliteral}{'/command'})}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314 }
+\DoxyCodeLine{315 @app.errorhandler(404)}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+example/\mbox{\hyperlink{main_8py}{main.\+py}}\end{DoxyCompactItemize}

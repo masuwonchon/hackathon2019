@@ -1,0 +1,113 @@
+\hypertarget{classmain_1_1logout}{}\doxysection{main.\+logout Class Reference}
+\label{classmain_1_1logout}\index{main.logout@{main.logout}}
+
+
+Inheritance diagram for main.\+logout\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=148pt]{classmain_1_1logout__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for main.\+logout\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=148pt]{classmain_1_1logout__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classmain_1_1logout_a726ef779e6bf4da8974eae3209276922}{post}} (self)
+\item 
+def \mbox{\hyperlink{classmain_1_1logout_a014267caa3d9cc9e42fdb71ef54ce43b}{get}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 239 of file main.\+py.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmain_1_1logout_a014267caa3d9cc9e42fdb71ef54ce43b}\label{classmain_1_1logout_a014267caa3d9cc9e42fdb71ef54ce43b}} 
+\index{main.logout@{main.logout}!get@{get}}
+\index{get@{get}!main.logout@{main.logout}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily def main.\+logout.\+get (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 269 of file main.\+py.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{269     \textcolor{keyword}{def }get(self):}
+\DoxyCodeLine{270         \textcolor{keywordflow}{if} current\_user.is\_active == \textcolor{keyword}{False}:}
+\DoxyCodeLine{271             \textcolor{keywordflow}{return} redirect(url\_for(\textcolor{stringliteral}{'index'}))}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273         response = make\_response(render\_template(\textcolor{stringliteral}{'logout.html'}))}
+\DoxyCodeLine{274         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{275 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmain_1_1logout_a726ef779e6bf4da8974eae3209276922}\label{classmain_1_1logout_a726ef779e6bf4da8974eae3209276922}} 
+\index{main.logout@{main.logout}!post@{post}}
+\index{post@{post}!main.logout@{main.logout}}
+\doxysubsubsection{\texorpdfstring{post()}{post()}}
+{\footnotesize\ttfamily def main.\+logout.\+post (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 240 of file main.\+py.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{240     \textcolor{keyword}{def }post(self):}
+\DoxyCodeLine{241         username = request.form.get(\textcolor{stringliteral}{'username'})}
+\DoxyCodeLine{242         prev\_LHB = request.form.get(\textcolor{stringliteral}{'loginhashblock'})}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244         \textcolor{keywordflow}{if} current\_user.is\_active == \textcolor{keyword}{False}:}
+\DoxyCodeLine{245             \textcolor{keywordflow}{return} redirect(url\_for(\textcolor{stringliteral}{'index'}))}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247         user = User.query.filter\_by(username=username).first()}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249         \textcolor{keywordflow}{if} DEBUG:}
+\DoxyCodeLine{250             \mbox{\hyperlink{namespaceloginhashblock_a1096aa8494b9c5875decc029d8b40ea9}{print\_LHBlist}}(user.Lhashblock)}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} prev\_LHB:}
+\DoxyCodeLine{253             print(\textcolor{stringliteral}{"[info:logout:post] GO TO OTP"})}
+\DoxyCodeLine{254         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{255             LHBlistStr, new\_LHB = \mbox{\hyperlink{namespaceloginhashblock_a2bcc7ddd0fcc3788572dd77808cb624d}{update\_loginhashblocklist}}(user.Lhashblock, prev\_LHB, DEBUG=DEBUG)}
+\DoxyCodeLine{256             user.Lhashblock = LHBlistStr}
+\DoxyCodeLine{257             db.session.commit()}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259         condition = \textcolor{keyword}{True}}
+\DoxyCodeLine{260         logout\_user()}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262         \textcolor{keywordflow}{if} DEBUG:}
+\DoxyCodeLine{263             text = \textcolor{stringliteral}{"[info:logout:post]\(\backslash\)nprev\_hashblock[\{\}]: \{\}\(\backslash\)nnext\_hashblock[\{\}]: \{\}"}.format(username,prev\_LHB,username,new\_LHB)}
+\DoxyCodeLine{264             print(text)}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266         response = make\_response(render\_template(\textcolor{stringliteral}{'index.html'}, condition=condition, username=username, LoginHB=new\_LHB))}
+\DoxyCodeLine{267         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{268 }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmain_1_1logout_a726ef779e6bf4da8974eae3209276922_cgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+example/\mbox{\hyperlink{main_8py}{main.\+py}}\end{DoxyCompactItemize}

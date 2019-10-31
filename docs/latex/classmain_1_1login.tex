@@ -1,0 +1,159 @@
+\hypertarget{classmain_1_1login}{}\doxysection{main.\+login Class Reference}
+\label{classmain_1_1login}\index{main.login@{main.login}}
+
+
+Inheritance diagram for main.\+login\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=142pt]{classmain_1_1login__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for main.\+login\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=142pt]{classmain_1_1login__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classmain_1_1login_a842b5fefc13556cbae749a8dc58d8e31}{get}} (self)
+\item 
+def \mbox{\hyperlink{classmain_1_1login_a71ff3f89aaf0f0c8502577445ab38744}{post}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 156 of file main.\+py.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmain_1_1login_a842b5fefc13556cbae749a8dc58d8e31}\label{classmain_1_1login_a842b5fefc13556cbae749a8dc58d8e31}} 
+\index{main.login@{main.login}!get@{get}}
+\index{get@{get}!main.login@{main.login}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily def main.\+login.\+get (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 157 of file main.\+py.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{157     \textcolor{keyword}{def }get(self):}
+\DoxyCodeLine{158         \textcolor{keywordflow}{if} current\_user.is\_authenticated:}
+\DoxyCodeLine{159             \textcolor{keywordflow}{return} redirect(url\_for(\textcolor{stringliteral}{'index'}))}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161         response = make\_response(render\_template(\textcolor{stringliteral}{'login.html'}))}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{164 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmain_1_1login_a71ff3f89aaf0f0c8502577445ab38744}\label{classmain_1_1login_a71ff3f89aaf0f0c8502577445ab38744}} 
+\index{main.login@{main.login}!post@{post}}
+\index{post@{post}!main.login@{main.login}}
+\doxysubsubsection{\texorpdfstring{post()}{post()}}
+{\footnotesize\ttfamily def main.\+login.\+post (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 165 of file main.\+py.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{165     \textcolor{keyword}{def }post(self):}
+\DoxyCodeLine{166         username = request.form.get(\textcolor{stringliteral}{'username'})}
+\DoxyCodeLine{167         password = request.form.get(\textcolor{stringliteral}{'password'})}
+\DoxyCodeLine{168         token = request.form.get(\textcolor{stringliteral}{'token'})}
+\DoxyCodeLine{169         prev\_LHB = request.form.get(\textcolor{stringliteral}{'loginhashblock'})}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} username:}
+\DoxyCodeLine{172             flash(\textcolor{stringliteral}{'username is null'})}
+\DoxyCodeLine{173             \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} password:}
+\DoxyCodeLine{176             flash(\textcolor{stringliteral}{'password is null'})}
+\DoxyCodeLine{177             \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179         user = User.query.filter\_by(username=username).first()}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} user:}
+\DoxyCodeLine{182             flash(\textcolor{stringliteral}{'not registered username'})}
+\DoxyCodeLine{183             \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} user.verify\_password(password):}
+\DoxyCodeLine{186             flash(\textcolor{stringliteral}{'password was wrong'})}
+\DoxyCodeLine{187             \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189         \textcolor{keywordflow}{if} token:}
+\DoxyCodeLine{190             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} user.verify\_totp(token):}
+\DoxyCodeLine{191                 flash(\textcolor{stringliteral}{'OTP was wrong'})}
+\DoxyCodeLine{192                 \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194             \textcolor{keywordflow}{if} prev\_LHB == \textcolor{stringliteral}{'null'}:}
+\DoxyCodeLine{195                 prev\_LHB = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197             \textcolor{keywordflow}{if} prev\_LHB:}
+\DoxyCodeLine{198                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} \mbox{\hyperlink{namespaceloginhashblock_adb424539d851426da7b65d53c5a6d577}{valid\_loginhashblock}}(prev\_LHB):}
+\DoxyCodeLine{199                     flash(\textcolor{stringliteral}{'Your account is suspected of being stolen. OTP is required.'})}
+\DoxyCodeLine{200                     \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202                 LHBlistStr, new\_LHB = \mbox{\hyperlink{namespaceloginhashblock_a2bcc7ddd0fcc3788572dd77808cb624d}{update\_loginhashblocklist}}(user.Lhashblock, prev\_LHB, DEBUG=DEBUG)}
+\DoxyCodeLine{203             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{204                 LHBlistStr, new\_LHB = \mbox{\hyperlink{namespaceloginhashblock_a550707107141dfb228ca4294d7ea31b4}{create\_loginhashblocklist}}(user.Lhashblock, DEBUG=DEBUG)}
+\DoxyCodeLine{205         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{206             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} user.Lhashblock:}
+\DoxyCodeLine{207                 flash(\textcolor{stringliteral}{'Your account is first login, OTP is required.'})}
+\DoxyCodeLine{208                 \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210             \textcolor{keywordflow}{if} prev\_LHB:}
+\DoxyCodeLine{211                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} \mbox{\hyperlink{namespaceloginhashblock_adb424539d851426da7b65d53c5a6d577}{valid\_loginhashblock}}(prev\_LHB):}
+\DoxyCodeLine{212                     flash(\textcolor{stringliteral}{'Your account is suspected of being stolen. OTP is required.'})}
+\DoxyCodeLine{213                     print(\textcolor{stringliteral}{"Error valid\_loginhashblock"})}
+\DoxyCodeLine{214                     \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} \mbox{\hyperlink{namespaceloginhashblock_aa5bb94484a68d0bbebce23b4cfeeb4b7}{verify\_loginhashblock}}(user.Lhashblock, prev\_LHB):}
+\DoxyCodeLine{217                     flash(\textcolor{stringliteral}{'Your account is suspected of being stolen. OTP is required.'})}
+\DoxyCodeLine{218                     print(\textcolor{stringliteral}{"Error verify\_loginhashblock"})}
+\DoxyCodeLine{219                     \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221                 LHBlistStr, new\_LHB = \mbox{\hyperlink{namespaceloginhashblock_a2bcc7ddd0fcc3788572dd77808cb624d}{update\_loginhashblocklist}}(user.Lhashblock, prev\_LHB, DEBUG=DEBUG)}
+\DoxyCodeLine{222             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{223                 flash(\textcolor{stringliteral}{'Error! Debug Mode'})}
+\DoxyCodeLine{224                 \textcolor{keywordflow}{return} make\_response(\textcolor{stringliteral}{'Error'}, 302)}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226         user.Lhashblock = LHBlistStr}
+\DoxyCodeLine{227         db.session.commit()}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229         \textcolor{keywordflow}{if} DEBUG:}
+\DoxyCodeLine{230             text = \textcolor{stringliteral}{"[info:login:post]\(\backslash\)nprev\_hashblock[\{\}]: \{\}\(\backslash\)nnext\_hashblock[\{\}]: \{\}"}.format(username,prev\_LHB,username,new\_LHB)}
+\DoxyCodeLine{231             print(text)}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233         login\_user(user)}
+\DoxyCodeLine{234         flash(\textcolor{stringliteral}{'You are now logged in!'})}
+\DoxyCodeLine{235         condition = \textcolor{keyword}{True}}
+\DoxyCodeLine{236         response = make\_response(render\_template(\textcolor{stringliteral}{'index.html'}, condition=condition, username=username, LoginHB=new\_LHB))}
+\DoxyCodeLine{237         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{238 }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmain_1_1login_a71ff3f89aaf0f0c8502577445ab38744_cgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+example/\mbox{\hyperlink{main_8py}{main.\+py}}\end{DoxyCompactItemize}
